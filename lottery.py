@@ -4,6 +4,7 @@ import bs4
 import json
 import requests
 import urllib3
+import time
 import random
 
 ''' 로또 '''
@@ -81,6 +82,8 @@ class App:
         lastRound, lastResult = scrapLottery()
         
         for r in range(1, lastRound + 1):
+            time.sleep(3)
+
             if r in self.lottery_data:
                 continue
             
