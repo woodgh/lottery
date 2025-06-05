@@ -81,7 +81,7 @@ class App:
     def run(self):
         lastRound, lastResult = scrapLottery()
         
-        for r in range(1, lastRound + 1):
+        for r in range(1, 3):
             time.sleep(3)
 
             if r in self.lottery_data:
