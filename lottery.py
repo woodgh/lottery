@@ -72,39 +72,36 @@ def scrapLottery(round=None):
 
 class App:
     def __init__(self):
-        try:
-            with open('static/lottery.json', 'r') as f:
-                self.lottery_data = json.load(f)
-        except FileNotFoundError:
-            self.lottery_data = dict()
-        
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+        with open('static/lottery.json', 'r') as f:
+            self.lotteryData = json.load(f)
+
+    def __saveData__(self):
+        with open('static/lottery.json', 'w') as f:
+            json.dump(self.lotteryData, f, indent=4)
+
     def run(self):
         lastRound, lastResult = scrapLottery()
         
-        for r in range(1, 3):
+        for r in range(1, lastRound + 1):
             time.sleep(3)
 
-            if r in self.lottery_data:
+            if str(r) in self.lotteryData:
                 continue
             
             try:
                 round, result = scrapLottery(r)
-            except:
-                print(f"Error fetching data for round {r}")
+            except Exception as e:
+                print("Error fetching data for round {r}: {e}")
             else:
-                self.lottery_data[int(round)] = result
+                self.lotteryData[round] = result
 
-            print(f"Round {r} data fetched successfully.")
+            print("Round %d data fetched successfully." % r)
 
-        self.saveData()
-
-    def saveData(self):
-        with open('static/lottery.json', 'w') as f:
-            json.dump(self.lottery_data, f, indent=4)
+        self.__saveData__()
 
 ''' main '''
 if __name__ == '__main__':
-    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
     app = App()
     app.run()
