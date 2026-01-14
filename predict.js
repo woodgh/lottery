@@ -1,8 +1,13 @@
 const Redis = require('ioredis');
 
-// 텔레그램 설정
-const TELEGRAM_BOT_TOKEN = '8429329724:AAEBxdtGhaMx3NPwHV3-Z-DfLh43D2gYnpo';
-const TELEGRAM_CHAT_ID = '7679001592';
+// 텔레그램 설정 (환경 변수 사용)
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
+if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
+  console.error('❌ Error: TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID env vars are required.');
+  process.exit(1);
+}
 
 const redis = new Redis({
   host: process.env.REDIS_HOST || 'localhost',
