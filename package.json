@@ -1,0 +1,14 @@
+{
+  "name": "lottery-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lotto prediction bot using Redis and Telegram",
+  "main": "predict.js",
+  "scripts": {
+    "migrate": "node migration.js",
+    "predict": "node predict.js"
+  },
+  "dependencies": {
+    "ioredis": "^5.9.1"
+  }
+}
